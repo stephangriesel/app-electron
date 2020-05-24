@@ -1,0 +1,14 @@
+{
+  "name": "app-electron",
+  "version": "1.0.0",
+  "description": "Stephan's Boilerplate Electron App",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Stephan Griesel",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^9.0.0"
+  }
+}
