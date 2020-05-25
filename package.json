@@ -4,11 +4,13 @@
   "description": "Stephan's Boilerplate Electron App",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dev": "nodemon --exec electron ."
   },
   "author": "Stephan Griesel",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^9.0.0"
+    "electron": "^9.0.0",
+    "nodemon": "^2.0.4"
   }
 }

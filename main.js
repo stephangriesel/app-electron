@@ -13,7 +13,7 @@ function createMainWindow() {
     mainWindow = new BrowserWindow({
         title: 'Resize Me',
         width: 400,
-        height: 500,
+        height: 550,
         autoHideMenuBar: true,
         icon: './assets/icon.png',
         resizable: isDev ? true : false
