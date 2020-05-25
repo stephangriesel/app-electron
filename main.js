@@ -1,5 +1,12 @@
 const { app, BrowserWindow } = require('electron')
 
+process.env.NODE_ENV = 'development';
+
+const isDev = process.env.NODE_ENV !== 'production' ? true : false;
+const isMac = process.platform === 'darwin' ? true : false;
+const isLinux = process.platform === 'linux' ? true : false;
+console.log(process.platform);
+
 let mainWindow;
 
 function createMainWindow() {
@@ -8,10 +15,23 @@ function createMainWindow() {
         width: 400,
         height: 500,
         autoHideMenuBar: true,
-        icon: './assets/icons/icon.png'
+        icon: './assets/icon.png',
+        resizable: isDev ? true : false
     })
 
     mainWindow.loadURL(`file://${__dirname}/app/index.html`)
 }
 
 app.on('ready', createMainWindow)
+
+app.on('window-all-closed', () => {
+    if (isMac) {
+        app.quit()
+    }
+})
+
+app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createMainWindow()
+    }
+})
