@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Menu } = require('electron')
 
 process.env.NODE_ENV = 'development';
 
@@ -22,7 +22,11 @@ function createMainWindow() {
     mainWindow.loadURL(`file://${__dirname}/app/index.html`)
 }
 
-app.on('ready', createMainWindow)
+app.on('ready', () => {
+    createMainWindow()
+
+    mainWindow.on('ready', () => mainWindow = null)
+})
 
 app.on('window-all-closed', () => {
     if (isMac) {
