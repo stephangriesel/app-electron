@@ -8,6 +8,7 @@ const isLinux = process.platform === 'linux' ? true : false;
 console.log(process.platform);
 
 let mainWindow;
+let aboutWindow;
 
 function createMainWindow() {
     mainWindow = new BrowserWindow({
@@ -23,12 +24,28 @@ function createMainWindow() {
     mainWindow.loadURL(`file://${__dirname}/app/index.html`)
 }
 
+function createAboutWindow() {
+    aboutWindow = new BrowserWindow({
+        title: 'About Resize Me',
+        width: 250,
+        height: 250,
+        autoHideMenuBar: true,
+        icon: './assets/icon.png',
+        resizable: false,
+        backgroundColor: '#678391',
+    })
+
+    aboutWindow.loadURL(`file://${__dirname}/app/about.html`)
+}
+
 app.on('ready', () => {
     createMainWindow()
 
     const mainMenu = Menu.buildFromTemplate(menu)
     Menu.setApplicationMenu(mainMenu)
 
+
+    // Not needed, set in roles on Developer menu
     globalShortcut.register('CmdOrCtrl+R', () => mainWindow.reload())
     globalShortcut.register(isMac ? 'Command+Alt+I' : 'Ctrl+Shift+I', () => mainWindow.toggleDevTools())
 
@@ -37,14 +54,32 @@ app.on('ready', () => {
 
 const menu = [
     ...(isMac ? [{
-        role: 'appMenu'
+        label: app.name,
+        submenu: [
+            {
+                label: 'About',
+                click: createAboutWindow,
+            }
+        ]
     }] : []),
     {
         role: 'fileMenu'
     },
+    ...(!isMac ? [
+        {
+            label: 'Help',
+            submenu: [
+                {
+                    label: 'About',
+                    click: createAboutWindow,
+                },
+            ]
+        }
+    ] : []),
+    // Developer Menu: Not working at moment, review
     ...(isDev ? [
         {
-            label: 'Developer',
+            label: 'Developer Menu',
             subMenu: [
                 {
                     role: 'reload'
