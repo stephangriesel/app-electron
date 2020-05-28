@@ -13,13 +13,20 @@ let aboutWindow;
 function createMainWindow() {
     mainWindow = new BrowserWindow({
         title: 'Resize Me',
-        width: 400,
+        width: isDev ? 1000 : 500,
         height: 550,
         autoHideMenuBar: true,
         icon: './assets/icon.png',
         resizable: isDev ? true : false,
         backgroundColor: '#353535',
+        webPreferences: {
+            nodeIntegration: true,
+        }
     })
+
+    if (isDev) {
+        mainWindow.webContents.openDevTools()
+    }
 
     mainWindow.loadURL(`file://${__dirname}/app/index.html`)
 }
