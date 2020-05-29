@@ -1,4 +1,11 @@
-const { app, BrowserWindow, Menu, globalShortcut, ipcMain } = require('electron')
+const path = require('path');
+const os = require('os');
+const { app, BrowserWindow, Menu, globalShortcut, ipcMain, shell } = require('electron');
+const imagemin = require('imagemin');
+const imageminMozJpeg = require('imagemin-mozjpeg');
+const imageminPngquant = require('imagemin-pngquant');
+const slash = require('slash');
+
 
 process.env.NODE_ENV = 'development';
 
@@ -106,8 +113,28 @@ const menu = [
 ]
 
 ipcMain.on('image:minimize', (event, options) => {
-    console.log(options)
+    options.dest = path.join(os.homedir(), 'imageresize')
+    resizeImage(options)
 })
+
+async function resizeImage({ imgPath, quality, dest }) {
+    try {
+        const pngQuality = quality / 100
+        const files = await imagemin([slash(imgPath)], {
+            destination: dest,
+            plugins: [
+                imageminMozJpeg({ quality }),
+                imageminPngquant({
+                    quality: [pngQuality, pngQuality]
+                })
+            ]
+        })
+        console.log(files)
+        shell.openPath(dest)
+    } catch (err) {
+        console.log(err)
+    }
+}
 
 app.on('window-all-closed', () => {
     if (isMac) {
