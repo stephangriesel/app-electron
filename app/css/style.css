@@ -1,21 +1,28 @@
+html,
+body {
+  background: #fff;
+}
+
 .container {
-	width: 400px;
-	margin-top: 70px;
-	padding: 0 20px;
+  background: rgb(202, 202, 202);
+  width: 400px;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 5%;
 }
 
 .about {
-	width: 100%;
+  width: 100%;
 }
 
 .btn {
-	width: 100%;
+  width: 100%;
 }
 
 .output {
-	margin-top: 40px;
+  margin-top: 40px;
 }
 
 #output-path {
-	font-weight: bold;
+  font-weight: bold;
 }

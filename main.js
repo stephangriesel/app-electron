@@ -42,7 +42,7 @@ function createAboutWindow() {
     aboutWindow = new BrowserWindow({
         title: 'About Resize Me',
         width: 250,
-        height: 250,
+        height: auto,
         autoHideMenuBar: true,
         icon: './assets/icon.png',
         resizable: false,
