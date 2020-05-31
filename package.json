@@ -1,16 +1,24 @@
 {
   "name": "app-electron",
+  "productName": "ResizeMe",
   "version": "1.0.0",
   "description": "Stephan's Boilerplate Electron App",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "nodemon --exec electron ."
+    "dev": "nodemon --exec electron .",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . --overwrite --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=false --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"ResizeMe\"",
+    "package-linux": "electron-packager . --overwrite --platform=linux --arch=x64 --icon=assets/icons/png/icon.png --prune=false --out=release-builds",
+    "build:package": "electron-packager . --out=release-builds",
+    "build:snap": "electron-installer-snap --src=release-builds/ResizeMe"
   },
   "author": "Stephan Griesel",
   "license": "ISC",
   "devDependencies": {
     "electron": "^9.0.0",
+    "electron-installer-snap": "^5.1.0",
+    "electron-packager": "^14.2.1",
     "nodemon": "^2.0.4"
   },
   "dependencies": {
