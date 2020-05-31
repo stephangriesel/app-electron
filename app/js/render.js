@@ -20,3 +20,11 @@ form.addEventListener('submit', event => {
         quality
     })
 })
+
+// Done >>
+
+ipcRenderer.on('image:done', () => {
+    M.toast({
+        html: `Image resized to ${slider.value}% quality`
+    })
+})
