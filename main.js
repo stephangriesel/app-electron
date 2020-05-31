@@ -5,9 +5,20 @@ const imagemin = require('imagemin');
 const imageminMozJpeg = require('imagemin-mozjpeg');
 const imageminPngquant = require('imagemin-pngquant');
 const slash = require('slash');
+const log = require('electron-log');
+
+/* 
+
+Log files can be found here:
+
+on Linux: ~/.config/{app name}/logs/{process type}.log
+on macOS: ~/Library/Logs/{app name}/{process type}.log
+on Windows: %USERPROFILE%\AppData\Roaming\{app name}\logs\{process type}.log
+
+*/
 
 
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'production';
 
 const isDev = process.env.NODE_ENV !== 'production' ? true : false;
 const isMac = process.platform === 'darwin' ? true : false;
@@ -130,11 +141,15 @@ async function resizeImage({ imgPath, quality, dest }) {
             ]
         })
         console.log(files)
+
+        log.info(files)
+
         shell.openPath(dest)
 
         mainWindow.webContents.send('image:done')
     } catch (err) {
         console.log(err)
+        log.error(err)
     }
 }
 
